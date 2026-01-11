@@ -1,124 +1,744 @@
-/* Global Styles */
+/* ========================================
+   DARTH SIDIOUS - SITH EMPEROR PORTFOLIO
+   Theme: Imperial Dark with Lightning Accents
+   ======================================== */
+
+/* CSS Variables - Empire Color Palette */
+:root {
+  /* Core Colors */
+  --void-black: #000000;
+  --deep-space: #0a0a0f;
+  --imperial-dark: #12121a;
+  --sith-grey: #1a1a24;
+  
+  /* Lightning Colors (matching JS) */
+  --lightning-core: rgba(235, 235, 255, 0.95);
+  --lightning-glow: rgba(150, 150, 255, 0.6);
+  --lightning-purple: #6b5ce7;
+  --lightning-blue: #4a6cf7;
+  
+  /* Royal Guard Red */
+  --emperor-red: #8b1a1a;
+  --royal-crimson: #b22222;
+  --blood-red: #c41e3a;
+  
+  /* Empire Accent Colors */
+  --imperial-silver: #c0c0c0;
+  --cold-steel: #8a8a9a;
+  --text-primary: #e8e8f0;
+  --text-secondary: #a0a0b0;
+  --text-muted: #606070;
+  
+  /* Gradients */
+  --gradient-dark: linear-gradient(180deg, var(--void-black) 0%, var(--deep-space) 50%, var(--imperial-dark) 100%);
+  --gradient-red: linear-gradient(135deg, var(--emperor-red) 0%, var(--blood-red) 100%);
+  --gradient-lightning: linear-gradient(135deg, var(--lightning-purple) 0%, var(--lightning-blue) 100%);
+}
+
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
 *, *:before, *:after {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-html, body {
-    margin: 0;
-    padding: 0;
-    background: black;
-    min-height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    box-sizing: border-box;
-  }
-  
-  /* Starry Night Background And Particles */
-  #starCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    display: block;
-  }
-  
-  canvas {
-    display: block;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  /* Content Container For Everything */
-  .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 2;
-    position: relative;
-    color: white;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-    min-height: 150vh;
-    text-align: center;
-    gap: 20px;
-    border: 3px solid red;
-  }
-  
-  .content-container .content,
-  .content-container .content div,
-  .content-container .content-text,
-  .content-container .battles,
-  .content-container .battles-text {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 1rem 0;
-    margin-top: 0;
-    align-self: flex-start;
-    border: 1px solid blue;
-    box-sizing: border-box;
-  }
-  
-  /* Content area with proper width constraints */
-  .content {
-    width: 90%;
-    max-width: 1200px;
-    padding: 20px;
-    border: 2px solid green;
-    pointer-events: auto;
-    overflow-y: auto;
-    box-sizing: border-box;
-    margin: 0 auto;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 3;
-    position: relative;
-  }
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  background: var(--void-black);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
-  /* Fixing Clickables in Content Container */
-  .content-container a,
-  .content-container button,
-  .content-container input,
-  .content-container select,
-  .content-container textarea,
-  .content-container [role="button"],
-  .content-container .interactive {
-    pointer-events: auto;
-    cursor: pointer;
+/* ========================================
+   CANVAS - STARRY BACKGROUND
+   ======================================== */
+#starCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========================================
+   CONTENT CONTAINER
+   ======================================== */
+.content-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+  background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 70%, transparent 100%);
+  backdrop-filter: blur(10px);
+}
+
+.nav-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  color: var(--text-primary);
+  text-shadow: 0 0 20px var(--lightning-glow);
+}
+
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-red);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+  text-shadow: 0 0 15px var(--lightning-glow);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ========================================
+   HERO SECTION - LIGHTNING DEMO
+   ======================================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center bottom, rgba(107, 92, 231, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 900px;
+  z-index: 2;
+}
+
+.hero-title {
+  margin-bottom: 2rem;
+}
+
+.hero-title-sub {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.hero-title-main {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background: linear-gradient(180deg, var(--text-primary) 0%, var(--cold-steel) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 30px rgba(150, 150, 255, 0.3));
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+.hero-cta {
+  margin-top: 2rem;
+}
+
+.lightning-prompt {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 3rem;
+  border: 1px solid rgba(107, 92, 231, 0.3);
+  border-radius: 8px;
+  background: rgba(107, 92, 231, 0.05);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  animation: pulse-glow 3s infinite;
+}
+
+.lightning-prompt:hover {
+  border-color: rgba(107, 92, 231, 0.6);
+  background: rgba(107, 92, 231, 0.1);
+  box-shadow: 0 0 40px rgba(107, 92, 231, 0.2);
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(107, 92, 231, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(107, 92, 231, 0.25);
+  }
+}
+
+.lightning-icon {
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px var(--lightning-glow));
+  animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0.8; }
+  20% { opacity: 1; }
+  30% { opacity: 0.9; }
+  50% { opacity: 1; }
+  70% { opacity: 0.85; }
+  80% { opacity: 1; }
+}
+
+.lightning-prompt span {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to top, var(--void-black) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ========================================
+   SECTION HEADERS
+   ======================================== */
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding-top: 2rem;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--gradient-red);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 1.5rem;
+}
+
+/* ========================================
+   FLOATING GALLERY CAROUSEL
+   ======================================== */
+.gallery {
+  padding: 6rem 0;
+  min-height: 80vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery .section-header {
+  padding: 0 2rem;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 450px;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+/* Fade edges for carousel */
+.carousel-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 15%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.carousel-fade-left {
+  left: 0;
+  background: linear-gradient(to right, var(--void-black) 0%, transparent 100%);
+}
+
+.carousel-fade-right {
+  right: 0;
+  background: linear-gradient(to left, var(--void-black) 0%, transparent 100%);
+}
+
+.floating-carousel {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  height: 100%;
+  padding: 2rem 0;
+  will-change: transform;
+}
+
+.carousel-image {
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
+}
+
+.carousel-image img {
+  display: block;
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Size variations */
+.carousel-image[data-size="small"] img {
+  width: 160px;
+  height: auto;
+}
+
+.carousel-image[data-size="medium"] img {
+  width: 240px;
+  height: auto;
+}
+
+.carousel-image[data-size="large"] img {
+  width: 320px;
+  height: auto;
+}
+
+/* Depth variations - creates parallax-like layering */
+.carousel-image[data-depth="front"] {
+  z-index: 3;
+  transform: translateY(0) scale(1);
+}
+
+.carousel-image[data-depth="front"] img {
+  opacity: 1;
+}
+
+.carousel-image[data-depth="mid"] {
+  z-index: 2;
+  transform: translateY(-20px) scale(0.9);
+}
+
+.carousel-image[data-depth="mid"] img {
+  opacity: 0.8;
+  filter: brightness(0.85);
+}
+
+.carousel-image[data-depth="back"] {
+  z-index: 1;
+  transform: translateY(-40px) scale(0.75);
+}
+
+.carousel-image[data-depth="back"] img {
+  opacity: 0.6;
+  filter: brightness(0.7) blur(1px);
+}
+
+/* Hover effects */
+.carousel-image:hover {
+  z-index: 20 !important;
+  transform: translateY(0) scale(1.05) !important;
+}
+
+.carousel-image:hover img {
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(107, 92, 231, 0.3);
+  opacity: 1 !important;
+  filter: brightness(1) blur(0) !important;
+}
+
+/* ========================================
+   APPRENTICES SECTION
+   ======================================== */
+.apprentices {
+  padding: 8rem 2rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(18, 18, 26, 0.5) 20%, rgba(18, 18, 26, 0.5) 80%, transparent 100%);
+}
+
+.apprentice-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.apprentice-card {
+  position: relative;
+  background: linear-gradient(180deg, var(--sith-grey) 0%, var(--imperial-dark) 100%);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.apprentice-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(139, 26, 26, 0.5);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(139, 26, 26, 0.2);
+}
+
+.card-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  filter: grayscale(30%) brightness(0.8);
+}
+
+.apprentice-card:hover .card-image img {
+  transform: scale(1.1);
+  filter: grayscale(0%) brightness(1);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: var(--royal-crimson);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.card-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.apprentice-card:hover .card-accent {
+  transform: scaleX(1);
+}
+
+/* ========================================
+   LEGACY SECTION
+   ======================================== */
+.legacy {
+  padding: 8rem 2rem;
+  position: relative;
+}
+
+.legacy::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(139, 26, 26, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.legacy-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.legacy-text {
+  margin-bottom: 4rem;
+}
+
+.legacy-text p {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  text-align: justify;
+  line-height: 1.9;
+}
+
+.legacy-quote {
+  text-align: center;
+  padding: 3rem 0;
+  position: relative;
+}
+
+.legacy-quote::before,
+.legacy-quote::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--royal-crimson), transparent);
+}
+
+.legacy-quote::before {
+  top: 0;
+}
+
+.legacy-quote::after {
+  bottom: 0;
+}
+
+.legacy-quote blockquote {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  padding: 6rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.imperial-symbol {
+  font-size: 3rem;
+  color: var(--royal-crimson);
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(139, 26, 26, 0.5));
+}
+
+.footer-text {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.footer-subtext {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+  .nav {
+    padding: 1rem 2rem;
   }
   
-  .content-container h1,
-  .content-container h2,
-  .content-container p,
-  .content-container img {
-    pointer-events: auto;
+  .nav-links {
+    display: none; /* Mobile menu would go here */
   }
+  
+  .hero {
+    padding: 8rem 1.5rem 4rem;
+  }
+  
+  .hero-title-sub {
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+  }
+  
+  .lightning-prompt {
+    padding: 1.5rem 2rem;
+  }
+  
+  .carousel-container {
+    height: 50vh;
+    min-height: 350px;
+  }
+  
+  .carousel-fade {
+    width: 10%;
+  }
+  
+  .carousel-image[data-size="small"] img {
+    width: 120px;
+  }
+  
+  .carousel-image[data-size="medium"] img {
+    width: 180px;
+  }
+  
+  .carousel-image[data-size="large"] img {
+    width: 240px;
+  }
+  
+  .apprentice-cards {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  .legacy-text p {
+    text-align: left;
+  }
+}
 
-  .content-text, .battles-text {
-    margin-bottom: 30px;
-    border: 1px solid yellow;
-  }
+/* ========================================
+   SELECTION & SCROLLBAR
+   ======================================== */
+::selection {
+  background: var(--royal-crimson);
+  color: var(--text-primary);
+}
 
-  .content-image, .battles-image {
-    margin-bottom: 30px;
-    border: 1px solid purple;
-  }
+::-webkit-scrollbar {
+  width: 8px;
+}
 
-  .content-image img, .battles-image img {
-    max-width: 100%;
-    height: auto;
-  }
+::-webkit-scrollbar-track {
+  background: var(--void-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sith-grey);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--emperor-red);
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.pointer-events-auto {
+  pointer-events: auto;
+}
+
+/* Ensure interactive elements work above canvas */
+a, button, input, select, textarea, [role="button"] {
+  position: relative;
+  z-index: 10;
+}

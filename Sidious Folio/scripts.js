@@ -630,3 +630,106 @@ window.addEventListener('resize', () => {
 });
 
 animate();
+
+// ========================================
+// AUTO-SCROLLING FLOATING CAROUSEL
+// ========================================
+function initCarousel() {
+  const carousel = document.getElementById('floatingCarousel');
+  if (!carousel) return;
+  
+  const images = carousel.querySelectorAll('.carousel-image');
+  if (images.length === 0) return;
+  
+  // Clone images for infinite scroll effect
+  images.forEach(img => {
+    const clone = img.cloneNode(true);
+    carousel.appendChild(clone);
+  });
+  
+  // Randomize vertical positions slightly for organic feel
+  const allImages = carousel.querySelectorAll('.carousel-image');
+  allImages.forEach((img, index) => {
+    const randomY = (Math.random() - 0.5) * 60; // -30px to +30px
+    const randomRotate = (Math.random() - 0.5) * 8; // -4deg to +4deg
+    img.style.setProperty('--random-y', `${randomY}px`);
+    img.style.setProperty('--random-rotate', `${randomRotate}deg`);
+    img.style.transform = `translateY(calc(var(--random-y, 0px))) rotate(${randomRotate}deg)`;
+    
+    // Apply depth transforms on top
+    const depth = img.dataset.depth;
+    if (depth === 'mid') {
+      img.style.transform = `translateY(calc(-20px + var(--random-y, 0px))) scale(0.9) rotate(${randomRotate}deg)`;
+    } else if (depth === 'back') {
+      img.style.transform = `translateY(calc(-40px + var(--random-y, 0px))) scale(0.75) rotate(${randomRotate}deg)`;
+    } else {
+      img.style.transform = `translateY(var(--random-y, 0px)) scale(1) rotate(${randomRotate}deg)`;
+    }
+  });
+  
+  // Animation variables
+  let scrollPosition = 0;
+  const scrollSpeed = 0.5; // pixels per frame
+  let isPaused = false;
+  let animationId;
+  
+  // Calculate total width of original images
+  function getCarouselWidth() {
+    let totalWidth = 0;
+    const gap = 48; // 3rem = 48px
+    for (let i = 0; i < images.length; i++) {
+      totalWidth += images[i].offsetWidth + gap;
+    }
+    return totalWidth;
+  }
+  
+  // Animation loop
+  function animateCarousel() {
+    if (!isPaused) {
+      scrollPosition += scrollSpeed;
+      
+      const halfWidth = getCarouselWidth();
+      
+      // Reset position for infinite loop
+      if (scrollPosition >= halfWidth) {
+        scrollPosition = 0;
+      }
+      
+      carousel.style.transform = `translateX(-${scrollPosition}px)`;
+    }
+    
+    animationId = requestAnimationFrame(animateCarousel);
+  }
+  
+  // Pause on hover
+  carousel.addEventListener('mouseenter', () => {
+    isPaused = true;
+  });
+  
+  carousel.addEventListener('mouseleave', () => {
+    isPaused = false;
+  });
+  
+  // Handle touch devices
+  carousel.addEventListener('touchstart', () => {
+    isPaused = true;
+  });
+  
+  carousel.addEventListener('touchend', () => {
+    setTimeout(() => {
+      isPaused = false;
+    }, 1000);
+  });
+  
+  // Start animation
+  animateCarousel();
+  
+  // Handle carousel resize
+  window.addEventListener('resize', () => {
+    // Recalculate positions on resize
+    scrollPosition = scrollPosition % getCarouselWidth();
+  });
+}
+
+// Initialize carousel when DOM is ready
+document.addEventListener('DOMContentLoaded', initCarousel);

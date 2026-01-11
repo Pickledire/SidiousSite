@@ -2,80 +2,214 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sith Emperor</title>
+  <title>Darth Sidious | The Sith Emperor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
   <canvas id="starCanvas"></canvas>
   
-  <!-- Container For All Content-->
+  <!-- Main Content Container -->
   <div class="content-container">
 
-    <div id="click-layer"></div>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-logo">SIDIOUS</div>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#apprentices">Apprentices</a></li>
+        <li><a href="#legacy">Legacy</a></li>
+      </ul>
+    </nav>
 
-    <header class="header">
-    <h1>Welcome To The Empire</h1>
-    </header>
+    <!-- Hero Section - Lightning Demo Area -->
+    <section id="hero" class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-title-sub">The Dark Lord of the Sith</span>
+          <span class="hero-title-main">DARTH SIDIOUS</span>
+        </h1>
+        <p class="hero-description">
+          Master of the dark side. Architect of the Galactic Empire. 
+          The phantom menace who orchestrated the fall of the Republic.
+        </p>
+        <div class="hero-cta">
+          <div class="lightning-prompt">
+            <div class="lightning-icon">⚡</div>
+            <span>Click & hold anywhere to unleash the dark side</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-fade"></div>
+    </section>
 
-    <div class="content">
-      <div class="content-text">
-        <h2>The Sith Emperor</h2>
-        <p>The Sith Emperor is the supreme leader of the Sith Empire. He is the master of the dark side of the Force and the ruler of the galaxy.</p>
-        <button class="button">Click Me</button>
-      </div>
-      <div class="content-image">
-        <img src="images/sith-emperor1.png" alt="Sith Emperor">
-      </div>
-
-      <div class="content-text">
-        <h2>The Sith Emperor</h2>
-        <p>The Sith Emperor is the supreme leader of the Sith Empire. He is the master of the dark side of the Force and the ruler of the galaxy.</p>
-      </div>
-
-      <div class="content-image">
-        <img src="images/sith-emperor1.png" alt="Sith Emperor">
-      </div>
-
-      <div class="content-text">
-        <h2>The Sith Emperor</h2>
-        <p>The Sith Emperor is the supreme leader of the Sith Empire. He is the master of the dark side of the Force and the ruler of the galaxy.</p>
-      </div>
-
-      <div class="battles">
-        <h2>Battles</h2>
-        <p>The Sith Emperor has fought many battles throughout his life. He is a master of the dark side of the Force and the ruler of the galaxy.</p>
-      </div>
-
-      <div class="battles-image">
-        <img src="images/sith-emperor1.png" alt="Sith Emperor">
-      </div>
-      
-      <div class="battles-text">
-        <h2>Battles</h2>
-        <p>The Sith Emperor has fought many battles throughout his life. He is a master of the dark side of the Force and the ruler of the galaxy.</p>
-      </div>
-
-      <div class="battles-image">
-        <img src="images/sith-emperor1.png" alt="Sith Emperor">
+    <!-- Floating Gallery Carousel -->
+    <section id="gallery" class="gallery">
+      <div class="section-header">
+        <h2 class="section-title">The Rise of an Emperor</h2>
+        <p class="section-subtitle">From Naboo Senator to Galactic Emperor</p>
       </div>
       
+      <!-- Carousel with fade edges -->
+      <div class="carousel-container">
+        <div class="carousel-fade carousel-fade-left"></div>
+        <div class="carousel-fade carousel-fade-right"></div>
+        
+        <div class="floating-carousel" id="floatingCarousel">
+          <!-- Images will be duplicated by JS for infinite scroll -->
+          <div class="carousel-image" data-size="large" data-depth="front">
+            <img src="images/sith-emperor1.png" alt="The Emperor">
+          </div>
+          <div class="carousel-image" data-size="small" data-depth="back">
+            <img src="images/sith-emperor1.png" alt="Darth Sidious">
+          </div>
+          <div class="carousel-image" data-size="medium" data-depth="mid">
+            <img src="images/sith-emperor1.png" alt="The Dark Lord">
+          </div>
+          <div class="carousel-image" data-size="large" data-depth="back">
+            <img src="images/sith-emperor1.png" alt="Palpatine">
+          </div>
+          <div class="carousel-image" data-size="small" data-depth="front">
+            <img src="images/sith-emperor1.png" alt="The Sith">
+          </div>
+          <div class="carousel-image" data-size="medium" data-depth="mid">
+            <img src="images/sith-emperor1.png" alt="Emperor Palpatine">
+          </div>
+          <div class="carousel-image" data-size="small" data-depth="back">
+            <img src="images/sith-emperor1.png" alt="The Dark Side">
+          </div>
+          <div class="carousel-image" data-size="large" data-depth="mid">
+            <img src="images/sith-emperor1.png" alt="The Senate">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apprentices Section -->
+    <section id="apprentices" class="apprentices">
+      <div class="section-header">
+        <h2 class="section-title">The Apprentices</h2>
+        <p class="section-subtitle">Those who served the Dark Lord</p>
+      </div>
       
+      <div class="apprentice-cards">
+        <!-- Darth Maul -->
+        <div class="apprentice-card">
+          <div class="card-image">
+            <img src="images/sith-emperor1.png" alt="Darth Maul">
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Darth Maul</h3>
+            <p class="card-subtitle">The Phantom Apprentice</p>
+            <p class="card-description">
+              A Zabrak warrior trained from childhood, Maul was a weapon of pure hatred. 
+              His defeat on Naboo was merely the beginning of his legacy of vengeance.
+            </p>
+          </div>
+          <div class="card-accent"></div>
+        </div>
 
-    </div>
+        <!-- Darth Tyranus -->
+        <div class="apprentice-card">
+          <div class="card-image">
+            <img src="images/sith-emperor1.png" alt="Darth Tyranus">
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Darth Tyranus</h3>
+            <p class="card-subtitle">Count Dooku</p>
+            <p class="card-description">
+              Once a revered Jedi Master, Dooku's disillusionment led him to the dark side. 
+              He served as the face of the Separatist movement until his usefulness ended.
+            </p>
+          </div>
+          <div class="card-accent"></div>
+        </div>
 
+        <!-- Darth Vader -->
+        <div class="apprentice-card">
+          <div class="card-image">
+            <img src="images/sith-emperor1.png" alt="Darth Vader">
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Darth Vader</h3>
+            <p class="card-subtitle">The Chosen One</p>
+            <p class="card-description">
+              The greatest prize—Anakin Skywalker, the Chosen One himself. 
+              His fall to darkness secured the Empire's iron grip on the galaxy.
+            </p>
+          </div>
+          <div class="card-accent"></div>
+        </div>
 
+        <!-- Inquisitors -->
+        <div class="apprentice-card">
+          <div class="card-image">
+            <img src="images/sith-emperor1.png" alt="The Inquisitors">
+            <div class="card-overlay"></div>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">The Inquisitorius</h3>
+            <p class="card-subtitle">Jedi Hunters</p>
+            <p class="card-description">
+              Former Jedi, twisted to serve the Empire. They hunted the survivors 
+              of Order 66, ensuring no light remained to challenge the darkness.
+            </p>
+          </div>
+          <div class="card-accent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Legacy Section -->
+    <section id="legacy" class="legacy">
+      <div class="section-header">
+        <h2 class="section-title">The Eternal Empire</h2>
+        <p class="section-subtitle">"The dark side of the Force is a pathway to many abilities some consider to be unnatural."</p>
+      </div>
+      
+      <div class="legacy-content">
+        <div class="legacy-text">
+          <p>
+            For a thousand years, the Sith waited in the shadows. Patient. Calculating. 
+            The Rule of Two ensured that each generation grew stronger, culminating in 
+            the ultimate Sith Lord—Darth Sidious.
+          </p>
+          <p>
+            Through manipulation and political genius, he dismantled the Republic from within. 
+            The Clone Wars were his masterwork, a conflict where he controlled both sides. 
+            When the time came, Order 66 extinguished the Jedi, and the Empire rose.
+          </p>
+          <p>
+            Even death could not contain him. Through the dark side, Sidious prepared for 
+            his return on Exegol, building the Final Order to reclaim what was always his.
+          </p>
+        </div>
+        <div class="legacy-quote">
+          <blockquote>
+            "Everything that has transpired has done so according to my design."
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="imperial-symbol">⬡</div>
+        <p class="footer-text">Long live the Empire</p>
+        <p class="footer-subtext">The Sith shall rule the galaxy once more</p>
+      </div>
+    </footer>
 
   </div>
 
-  <script>
-    // Make sure canvas is sized properly
-    window.onload = function() {
-      const canvas = document.getElementById('starCanvas');
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-  </script>
   <script src="scripts.js"></script>
 </body>
 </html>
