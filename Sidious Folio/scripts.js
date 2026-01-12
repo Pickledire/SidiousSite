@@ -656,15 +656,15 @@ function initCarousel() {
     img.style.setProperty('--random-rotate', `${randomRotate}deg`);
     img.style.transform = `translateY(calc(var(--random-y, 0px))) rotate(${randomRotate}deg)`;
     
-    // Apply depth transforms on top
-    const depth = img.dataset.depth;
-    if (depth === 'mid') {
-      img.style.transform = `translateY(calc(-20px + var(--random-y, 0px))) scale(0.9) rotate(${randomRotate}deg)`;
-    } else if (depth === 'back') {
-      img.style.transform = `translateY(calc(-40px + var(--random-y, 0px))) scale(0.75) rotate(${randomRotate}deg)`;
-    } else {
-      img.style.transform = `translateY(var(--random-y, 0px)) scale(1) rotate(${randomRotate}deg)`;
-    }
+      // Apply depth transforms on top
+      const depth = img.dataset.depth;
+      if (depth === 'mid') {
+        img.style.transform = `translateY(calc(-15px + var(--random-y, 0px))) scale(0.85) rotate(${randomRotate}deg)`;
+      } else if (depth === 'back') {
+        img.style.transform = `translateY(calc(-30px + var(--random-y, 0px))) scale(0.7) rotate(${randomRotate}deg)`;
+      } else {
+        img.style.transform = `translateY(var(--random-y, 0px)) scale(1) rotate(${randomRotate}deg)`;
+      }
   });
   
   // Animation variables
@@ -673,13 +673,15 @@ function initCarousel() {
   let isPaused = false;
   let animationId;
   
-  // Calculate total width of original images
+  // Calculate total width of original images (accounting for overlap)
   function getCarouselWidth() {
     let totalWidth = 0;
-    const gap = 48; // 3rem = 48px
+    const overlap = -60; // Negative gap creates overlap
     for (let i = 0; i < images.length; i++) {
-      totalWidth += images[i].offsetWidth + gap;
+      totalWidth += images[i].offsetWidth + overlap;
     }
+    // Add back the last overlap since we don't need spacing after the last image
+    totalWidth -= overlap;
     return totalWidth;
   }
   
@@ -733,3 +735,85 @@ function initCarousel() {
 
 // Initialize carousel when DOM is ready
 document.addEventListener('DOMContentLoaded', initCarousel);
+
+// ========================================
+// ACTIVE NAVIGATION HIGHLIGHTING
+// ========================================
+function initActiveNav() {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+  
+  if (navLinks.length === 0 || sections.length === 0) return;
+  
+  // Remove active class from all links
+  function removeActive() {
+    navLinks.forEach(link => link.classList.remove('active'));
+  }
+  
+  // Add active class to link matching current section
+  function setActive(id) {
+    removeActive();
+    const activeLink = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (activeLink) {
+      activeLink.classList.add('active');
+    }
+  }
+  
+  // Intersection Observer to detect which section is in view
+  const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -60% 0px', // Trigger when section is in upper portion of viewport
+    threshold: 0
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActive(entry.target.id);
+      }
+    });
+  }, observerOptions);
+  
+  // Observe all sections
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+  
+  // Set initial active state based on scroll position
+  function checkInitialActive() {
+    const scrollPos = window.scrollY + 100; // Offset for nav bar
+    
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = sections[i];
+      const sectionTop = section.offsetTop;
+      
+      if (scrollPos >= sectionTop) {
+        setActive(section.id);
+        break;
+      }
+    }
+    
+    // If at top, set hero as active
+    if (window.scrollY < 50) {
+      setActive('hero');
+    }
+  }
+  
+  // Check on load
+  checkInitialActive();
+  
+  // Also check on scroll (for smooth transitions)
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        checkInitialActive();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+// Initialize active nav when DOM is ready
+document.addEventListener('DOMContentLoaded', initActiveNav);
